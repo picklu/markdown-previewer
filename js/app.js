@@ -13,6 +13,7 @@ const {
   createMuiTheme,
   Box,
   Button,
+  Input,
   Icon,
   Link,
   CircularProgress
@@ -56,6 +57,9 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column'
+  },
+  header: {
+    textAlign: 'center'
   }
 }));
 
@@ -70,16 +74,38 @@ const clsx = (...classes) => {
   return Array.from(classes).join(' ');
 };
 
+const Header = props => {
+  const classes = useStyles();
+
+  return (
+    <Box variant='h3' className={classes.header}>
+      {props.text}
+    </Box>
+  );
+};
+
 const Editor = () => {
   const classes = useStyles();
 
-  return <Box className={classes.container}>Editor</Box>;
+  return (
+    <Box className={classes.container}>
+      <Header text='Editor' />
+      <Input id='editor' type='textarea' multiline={true} />
+    </Box>
+  );
 };
 
-const Previewer = () => {
+const Previewer = props => {
   const classes = useStyles();
 
-  return <Box className={classes.container}>Previewer</Box>;
+  return (
+    <Box className={classes.container}>
+      <Header text='Previewer' />
+      <Box id='preview' variant='p'>
+        {props.marked}
+      </Box>
+    </Box>
+  );
 };
 
 // Footer
