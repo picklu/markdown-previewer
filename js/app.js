@@ -70,6 +70,18 @@ const clsx = (...classes) => {
   return Array.from(classes).join(' ');
 };
 
+const Editor = () => {
+  const classes = useStyles();
+
+  return <Box className={classes.container}>Editor</Box>;
+};
+
+const Previewer = () => {
+  const classes = useStyles();
+
+  return <Box className={classes.container}>Previewer</Box>;
+};
+
 // Footer
 const Footer = () => {
   const classes = useStyles();
@@ -88,8 +100,8 @@ const MarkdownPreviewer = () => {
   return (
     <React.Fragment>
       <Container maxWidth='lg' className={classes.root}>
-        <Box className={classes.container}>Editor</Box>
-        <Box className={classes.container}>Previewer</Box>
+        <Editor />
+        <Previewer />
       </Container>
     </React.Fragment>
   );
