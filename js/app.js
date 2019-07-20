@@ -116,7 +116,6 @@ const Editor = props => {
         name='textInput'
         id='editor'
         multiline={true}
-        // placeholder='This is your editor for markdown ...'
         className={classes.input}
         value={textInput}
         onChange={event => setTextInput(event.target.value)}
