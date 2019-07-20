@@ -103,7 +103,7 @@ const Header = props => {
 
 const Editor = props => {
   const classes = useStyles();
-  const [textInput, setTextInput] = useState('');
+  const [textInput, setTextInput] = useState(props.defaultValue);
 
   const handleInput = () => {
     props.handleInputText(textInput);
@@ -116,8 +116,9 @@ const Editor = props => {
         name='textInput'
         id='editor'
         multiline={true}
-        placeholder='This is your editor for markdown ...'
+        // placeholder='This is your editor for markdown ...'
         className={classes.input}
+        defaultValue={props.defaultValue}
         value={textInput}
         onChange={event => setTextInput(event.target.value)}
         ref={handleInput}
@@ -154,8 +155,8 @@ const Footer = () => {
 
 // Markdown Previewer
 const MarkdownPreviewer = () => {
-  const [text, setText] = useState('');
-  const [markedText, setMarkedText] = useState('');
+  const [text, setText] = useState('## Hello, World!');
+  const [markedText, setMarkedText] = useState(marked(text));
   const classes = useStyles();
 
   useEffect(() => {
@@ -169,7 +170,7 @@ const MarkdownPreviewer = () => {
   return (
     <React.Fragment>
       <Container maxWidth='lg' className={classes.root}>
-        <Editor handleInputText={handleInputText} />
+        <Editor defaultValue={text} handleInputText={handleInputText} />
         <Previewer markedText={markedText} />
       </Container>
     </React.Fragment>
