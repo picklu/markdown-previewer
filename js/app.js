@@ -68,6 +68,13 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'scroll',
     display: 'flex',
     alignItems: 'stretch'
+  },
+  preview: {
+    color: 'black',
+    height: '100%',
+    padding: '15px',
+    resize: 'none',
+    overflowY: 'scroll'
   }
 }));
 
@@ -82,7 +89,7 @@ const clsx = (...classes) => {
   return Array.from(classes).join(' ');
 };
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const Header = props => {
   const classes = useStyles();
@@ -94,12 +101,12 @@ const Header = props => {
   );
 };
 
-const Editor = () => {
+const Editor = props => {
   const classes = useStyles();
   const [textInput, setTextInput] = useState('');
 
   const handleInput = () => {
-    console.log(textInput);
+    props.handleInputText(textInput);
   };
 
   return (
@@ -125,9 +132,11 @@ const Previewer = props => {
   return (
     <Box className={classes.container}>
       <Header text='Previewer' />
-      <Box id='preview' variant='p'>
-        {props.marked}
-      </Box>
+      <Box
+        id='preview'
+        className={classes.preview}
+        dangerouslySetInnerHTML={{ __html: props.markedText }}
+      />
     </Box>
   );
 };
@@ -145,13 +154,23 @@ const Footer = () => {
 
 // Markdown Previewer
 const MarkdownPreviewer = () => {
+  const [text, setText] = useState('');
+  const [markedText, setMarkedText] = useState('');
   const classes = useStyles();
+
+  useEffect(() => {
+    setMarkedText(marked(text));
+  }, [text]);
+
+  const handleInputText = inputText => {
+    setText(inputText);
+  };
 
   return (
     <React.Fragment>
       <Container maxWidth='lg' className={classes.root}>
-        <Editor />
-        <Previewer />
+        <Editor handleInputText={handleInputText} />
+        <Previewer markedText={markedText} />
       </Container>
     </React.Fragment>
   );
