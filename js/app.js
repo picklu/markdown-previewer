@@ -12,7 +12,6 @@ const {
   makeStyles,
   createMuiTheme,
   Box,
-  Button,
   Input,
   Icon,
   Link,
@@ -22,7 +21,7 @@ const {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#556cd6'
+      main: '#779ce6'
     },
     secondary: {
       main: '#19857b'
@@ -34,7 +33,7 @@ const theme = createMuiTheme({
       main: colors.red.A400
     },
     background: {
-      default: '#556cd6'
+      default: '#ccc'
     }
   }
 });
@@ -42,7 +41,6 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: 'white',
-    borderRadius: '5px',
     fontSize: '1.5rem',
     height: '500px',
     marginTop: '100px',
@@ -50,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     padding: '0'
   },
   container: {
-    border: '1px solid red',
+    color: 'white',
     fontSize: 'inherit',
     flex: 1,
     width: '100%',
@@ -59,7 +57,17 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column'
   },
   header: {
+    backgroundColor: '#444',
+    padding: '10px',
     textAlign: 'center'
+  },
+  input: {
+    height: '100%',
+    padding: '15px',
+    resize: 'none',
+    overflowY: 'scroll',
+    display: 'flex',
+    alignItems: 'stretch'
   }
 }));
 
@@ -74,11 +82,13 @@ const clsx = (...classes) => {
   return Array.from(classes).join(' ');
 };
 
+const { useState } = React;
+
 const Header = props => {
   const classes = useStyles();
 
   return (
-    <Box variant='h3' className={classes.header}>
+    <Box color='tertiary' variant='h3' className={classes.header}>
       {props.text}
     </Box>
   );
@@ -86,11 +96,25 @@ const Header = props => {
 
 const Editor = () => {
   const classes = useStyles();
+  const [textInput, setTextInput] = useState('');
+
+  const handleInput = () => {
+    console.log(textInput);
+  };
 
   return (
     <Box className={classes.container}>
       <Header text='Editor' />
-      <Input id='editor' type='textarea' multiline={true} />
+      <Input
+        name='textInput'
+        id='editor'
+        multiline={true}
+        placeholder='This is your editor for markdown ...'
+        className={classes.input}
+        value={textInput}
+        onChange={event => setTextInput(event.target.value)}
+        ref={handleInput}
+      />
     </Box>
   );
 };
@@ -113,7 +137,7 @@ const Footer = () => {
   const classes = useStyles();
 
   return (
-    <Box textAlign='center' color='white' margin={2}>
+    <Box textAlign='center' margin={3}>
       <Typography>&copy; 2019 picklu</Typography>
     </Box>
   );
